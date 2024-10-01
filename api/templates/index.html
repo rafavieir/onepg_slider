@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Site - One Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
+    <style>
+        /* Navbar fixa no topo */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            padding-top: 70px;
+        }
+
+        .section {
+            padding: 60px 0;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 40px 0;
+        }
+
+        .whatsapp-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .navbar-toggler {
+            border-color: rgba(0,0,0,.1);
+        }
+
+        .whatsapp-button img {
+            width: 50px;
+            height: 50px;
+        }
+
+        /* Scroll suave para navegação */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Meu Site</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#home">Início</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#services">Serviços</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contato</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Seção Home -->
+    <section id="home" class="section bg-light">
+        <div class="container">
+            <h2 class="text-center">Bem-vindo ao Meu Site</h2>
+            <p class="text-center">Aqui você encontrará tudo o que precisa saber sobre nossos serviços e produtos.</p>
+        </div>
+    </section>
+
+    <!-- Seção Serviços -->
+    <section id="services" class="section">
+        <div class="container">
+            <h2 class="text-center">Nossos Serviços</h2>
+            <div class="row">
+                {% for card in cards %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{ card.image }}" class="card-img-top" alt="{{ card.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ card.title }}</h5>
+                            <p class="card-text">{{ card.description }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Contato -->
+    <section id="contact" class="section bg-light">
+        <div class="container">
+            <h2 class="text-center">Contato</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Nome</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Mensagem</label>
+                    <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary mt-3">Enviar</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="container text-center">
+            <p>© 2024 {{ footer_info.company_name }} - Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Botão WhatsApp -->
+    <div class="whatsapp-button">
+        <a href="https://api.whatsapp.com/send?phone={{ footer_info.whatsapp }}" target="_blank">
+            <img src="static/images/icons/whatsapp.png" alt="WhatsApp">
+        </a>
+    </div>
+
+    <!-- Bibliotecas JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Smooth Scroll Script -->
+    <script>
+        // Garantir rolagem suave ao clicar em links da navbar
+        document.querySelectorAll('.navbar-nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();  // Impedir a ação padrão do link
+                const targetId = this.getAttribute('href').substring(1); // Pegar o ID da seção
+                const targetElement = document.getElementById(targetId); // Selecionar a seção correspondente
+                
+                // Scroll suave com controle de tempo
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70, // Ajuste para compensar o navbar fixo
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Validação do formulário de contato com reCAPTCHA
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o envio normal do formulário
+
+            // Executa o reCAPTCHA e obtém o token
+            grecaptcha.ready(function() {
+                grecaptcha.execute('{{ recaptcha_site_key }}', { action: 'submit' }).then(function(token) {
+                    // Adiciona o token ao formulário
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'g-recaptcha-response';
+                    input.value = token;
+                    document.getElementById('contactForm').appendChild(input);
+
+                    // Agora pode enviar o formulário
+                    event.target.submit();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

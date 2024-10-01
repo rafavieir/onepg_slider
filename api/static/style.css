@@ -1,0 +1,61 @@
+/* Estilos básicos para o Carousel */
+.carousel-img {
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Preenche a tela inteira */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.carousel-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+}
+
+.carousel-caption h5 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.carousel-caption p {
+    font-size: 1.2rem;
+}
+
+/* Parallax Effect */
+.carousel-item {
+    background-attachment: fixed;
+}
+
+/* Navbar */
+.navbar {
+    margin-bottom: 50px;
+}
+
+/* Footer */
+footer {
+    background-color: #f1f1f1;
+    padding: 20px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .carousel-caption h5 {
+        font-size: 1.5rem;
+    }
+
+    .carousel-caption p {
+        font-size: 0.9rem;
+    }
+
+    .carousel-img {
+        height: 70vh; /* Ajuste de altura para telas menores */
+    }
+}

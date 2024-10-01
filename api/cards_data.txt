@@ -1,0 +1,4 @@
+Card 1|Descrição do card 1|/static/images/cardimg/img1.png
+Card 2|Descrição do card 2|/static/images/cardimg/img2.png
+Card 1|Descrição do card 1|/static/images/cardimg/img1.png
+Card 2|Descrição do card 2|/static/images/cardimg/img2.png
