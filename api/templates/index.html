@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Site - One Page com Slider</title>
     <style>
+        /* Estilos gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
         /* Navbar fixa no topo */
         .navbar {
             position: fixed;
@@ -13,18 +31,35 @@
             z-index: 1000;
             background-color: white;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
         }
 
+        .navbar a {
+            text-decoration: none;
+            color: #333;
+            margin: 0 15px;
+        }
+
+        .navbar a:hover {
+            color: #ff5733;
+        }
+
+        /* Padding para o conteúdo, devido à navbar */
         body {
             padding-top: 70px;
-            margin: 0;
-            font-family: Arial, sans-serif;
         }
 
+        /* Seções */
         .section {
             padding: 60px 0;
+            text-align: center;
         }
 
+        .section:nth-child(even) {
+            background-color: #f4f4f4;
+        }
+
+        /* Slider */
         .slider {
             display: flex;
             overflow: hidden;
@@ -50,7 +85,6 @@
             object-fit: cover;
         }
 
-        /* Texto que aparecerá no hover */
         .slide .card-text {
             position: absolute;
             top: 0;
@@ -92,21 +126,64 @@
             right: 10px;
         }
 
+        /* Estilos do rodapé */
         footer {
             background-color: #f8f9fa;
             padding: 40px 0;
+            text-align: center;
+            color: #333;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Estilos para outros elementos da página */
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .slider-container {
+                width: 100%;
+            }
+
+            .slide {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">Meu Site</a>
+    <nav class="navbar">
+        <div class="container">
+            <a href="#home">Home</a>
+            <a href="#about">Sobre</a>
+            <a href="#services">Serviços</a>
+            <a href="#contact">Contato</a>
+        </div>
     </nav>
+
+    <section id="home" class="section">
+        <div class="container">
+            <h2>Bem-vindo ao Meu Site</h2>
+            <p>Este é um exemplo de uma página one-page com um slider simples em HTML e CSS.</p>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2>Sobre Nós</h2>
+            <p>Somos uma empresa dedicada a fornecer os melhores serviços para nossos clientes. Nosso time é composto por profissionais altamente qualificados e com vasta experiência no mercado.</p>
+        </div>
+    </section>
 
     <section id="services" class="section">
         <div class="container">
-            <h2 class="text-center">Nossos Serviços</h2>
+            <h2>Nossos Serviços</h2>
             <div class="slider">
                 <div class="slider-container">
                     <!-- Slide 1 -->
@@ -141,30 +218,34 @@
         </div>
     </section>
 
-    <footer>
-        <div class="container text-center">
-            <p>© 2024 Meu Site - Todos os direitos reservados.</p>
+    <section id="contact" class="section">
+        <div class="container">
+            <h2>Contato</h2>
+            <p>Entre em contato conosco para mais informações sobre nossos serviços.</p>
         </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Meu Site. Todos os direitos reservados.</p>
     </footer>
 
     <script>
         let currentSlide = 0;
 
-        function moveSlide(direction) {
-            const slider = document.querySelector('.slider-container');
+        function moveSlide(step) {
+            const slides = document.querySelector('.slider-container');
             const totalSlides = document.querySelectorAll('.slide').length;
 
-            currentSlide += direction;
-
+            currentSlide += step;
             if (currentSlide >= totalSlides) {
                 currentSlide = 0;
             } else if (currentSlide < 0) {
                 currentSlide = totalSlides - 1;
             }
 
-            slider.style.transform = `translateX(-${currentSlide * 100 / totalSlides}%)`;
+            const offset = -currentSlide * 100 / totalSlides;
+            slides.style.transform = `translateX(${offset}%)`;
         }
     </script>
-
 </body>
 </html>
