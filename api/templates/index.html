@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Site - One Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
+    <title>Meu Site - One Page com Slider</title>
     <style>
         /* Navbar fixa no topo */
         .navbar {
@@ -19,171 +17,154 @@
 
         body {
             padding-top: 70px;
+            margin: 0;
+            font-family: Arial, sans-serif;
         }
 
         .section {
             padding: 60px 0;
         }
 
-        .card {
-            margin-bottom: 20px;
+        .slider {
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            margin: auto;
+        }
+
+        .slider-container {
+            display: flex;
+            width: 300%; /* Para mostrar 3 slides */
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            width: 33.3333%;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        /* Texto que aparecerá no hover */
+        .slide .card-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            opacity: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+            transition: opacity 0.3s ease;
+        }
+
+        .slide:hover .card-text {
+            opacity: 1;
+        }
+
+        /* Botões de navegação */
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
         }
 
         footer {
             background-color: #f8f9fa;
             padding: 40px 0;
         }
-
-        .whatsapp-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-
-        .navbar-toggler {
-            border-color: rgba(0,0,0,.1);
-        }
-
-        .whatsapp-button img {
-            width: 50px;
-            height: 50px;
-        }
-
-        /* Scroll suave para navegação */
-        html {
-            scroll-behavior: smooth;
-        }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">Meu Site</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#home">Início</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#services">Serviços</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contato</a>
-                </li>
-            </ul>
-        </div>
     </nav>
 
-    <!-- Seção Home -->
-    <section id="home" class="section bg-light">
-        <div class="container">
-            <h2 class="text-center">Bem-vindo ao Meu Site</h2>
-            <p class="text-center">Aqui você encontrará tudo o que precisa saber sobre nossos serviços e produtos.</p>
-        </div>
-    </section>
-
-    <!-- Seção Serviços -->
     <section id="services" class="section">
         <div class="container">
             <h2 class="text-center">Nossos Serviços</h2>
-            <div class="row">
-                {% for card in cards %}
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="{{ card.image }}" class="card-img-top" alt="{{ card.title }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ card.title }}</h5>
-                            <p class="card-text">{{ card.description }}</p>
+            <div class="slider">
+                <div class="slider-container">
+                    <!-- Slide 1 -->
+                    <div class="slide">
+                        <img src="https://via.placeholder.com/800x300/FF5733/FFFFFF?text=Serviço+1" alt="Serviço 1">
+                        <div class="card-text">
+                            <h5>Serviço 1</h5>
+                            <p>Descrição do serviço 1. Detalhes adicionais sobre o que oferecemos.</p>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="slide">
+                        <img src="https://via.placeholder.com/800x300/33C1FF/FFFFFF?text=Serviço+2" alt="Serviço 2">
+                        <div class="card-text">
+                            <h5>Serviço 2</h5>
+                            <p>Descrição do serviço 2. Mais informações sobre este serviço.</p>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="slide">
+                        <img src="https://via.placeholder.com/800x300/28A745/FFFFFF?text=Serviço+3" alt="Serviço 3">
+                        <div class="card-text">
+                            <h5>Serviço 3</h5>
+                            <p>Descrição do serviço 3. Benefícios e funcionalidades.</p>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
+                <!-- Botões de navegação -->
+                <div class="slider-nav prev" onclick="moveSlide(-1)">&#10094;</div>
+                <div class="slider-nav next" onclick="moveSlide(1)">&#10095;</div>
             </div>
         </div>
     </section>
 
-    <!-- Seção Contato -->
-    <section id="contact" class="section bg-light">
-        <div class="container">
-            <h2 class="text-center">Contato</h2>
-            <form id="contactForm">
-                <div class="form-group">
-                    <label for="name">Nome</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Mensagem</label>
-                    <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
-                </div>
-                
-                <button type="submit" class="btn btn-primary mt-3">Enviar</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Rodapé -->
     <footer>
         <div class="container text-center">
-            <p>© 2024 {{ footer_info.company_name }} - Todos os direitos reservados.</p>
+            <p>© 2024 Meu Site - Todos os direitos reservados.</p>
         </div>
     </footer>
 
-    <!-- Botão WhatsApp -->
-    <div class="whatsapp-button">
-        <a href="https://api.whatsapp.com/send?phone={{ footer_info.whatsapp }}" target="_blank">
-            <img src="static/images/icons/whatsapp.png" alt="WhatsApp">
-        </a>
-    </div>
-
-    <!-- Bibliotecas JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <!-- Smooth Scroll Script -->
     <script>
-        // Garantir rolagem suave ao clicar em links da navbar
-        document.querySelectorAll('.navbar-nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();  // Impedir a ação padrão do link
-                const targetId = this.getAttribute('href').substring(1); // Pegar o ID da seção
-                const targetElement = document.getElementById(targetId); // Selecionar a seção correspondente
-                
-                // Scroll suave com controle de tempo
-                window.scrollTo({
-                    top: targetElement.offsetTop - 70, // Ajuste para compensar o navbar fixo
-                    behavior: 'smooth'
-                });
-            });
-        });
+        let currentSlide = 0;
 
-        // Validação do formulário de contato com reCAPTCHA
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Impede o envio normal do formulário
+        function moveSlide(direction) {
+            const slider = document.querySelector('.slider-container');
+            const totalSlides = document.querySelectorAll('.slide').length;
 
-            // Executa o reCAPTCHA e obtém o token
-            grecaptcha.ready(function() {
-                grecaptcha.execute('{{ recaptcha_site_key }}', { action: 'submit' }).then(function(token) {
-                    // Adiciona o token ao formulário
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = 'g-recaptcha-response';
-                    input.value = token;
-                    document.getElementById('contactForm').appendChild(input);
+            currentSlide += direction;
 
-                    // Agora pode enviar o formulário
-                    event.target.submit();
-                });
-            });
-        });
+            if (currentSlide >= totalSlides) {
+                currentSlide = 0;
+            } else if (currentSlide < 0) {
+                currentSlide = totalSlides - 1;
+            }
+
+            slider.style.transform = `translateX(-${currentSlide * 100 / totalSlides}%)`;
+        }
     </script>
+
 </body>
 </html>
